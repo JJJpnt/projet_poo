@@ -1,19 +1,25 @@
 <?php
 
-class Character {
-    private $_alive = true;
-    private $_HP; // Points de vie
-    private $_MP; // Points de magie
-    private $_STR; // Force
-    private $_STA; // Endurance
-    private $_name; // Nom
+abstract class Character {
+    protected $_alive = true;
+    protected $_HP; // Points de vie
+    protected $_MP; // Points de magie
+    protected $_STR; // Force
+    protected $_STA; // Endurance Physique
+    protected $_SPR; // Esprit : Resitance Magique
+    protected $_name; // Nom
     
-    public function __construct() {
-        $this->_HP = 100; // Points de vie
-        $this->_MP = 100; // Points de magie
-        $this->_STR = 10; // Force
-        $this->_STA = 10; // Endurance
-        $this->_name = "Plouc";
+    public function __construct($hp, $mp, $str, $sta, $spr, $name) {
+        $this->_HP = $hp; // Points de vie
+        $this->_MP = $mp; // Points de magie
+        $this->_STR = $str; // Force
+        $this->_STA = $sta; // Endurance
+        $this->_name = $name;
+        echo $this->_name." entre en jeu !<br>\nHP : $this->_HP<br>\nSTA : $this->_STA<br>\n";
+    }
+
+    public function getName() {
+        return $this->_name;
     }
 
     public function getHP() {
@@ -40,7 +46,7 @@ class Character {
         $stamina = $this->_STA;
         echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
         $damage = $force / $stamina;
-        $this->_HP -= $damage;
+        $this->_HP -= $damage * 10;
         echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
         if($this->_HP < 0) {
             $this->_alive = false;
@@ -52,52 +58,43 @@ class Character {
 }
 
 class Warrior extends Character {
-    function __construct() {        
-        $this->_HP = 150; // Points de vie
-        $this->_MP = 0; // Points de magie
-        $this->_STR = 20; // Force
-        $this->_STA = 15; // Endurance
-        $this->_name = "Warrior"; // Nom
-        echo $this->_name." entre en jeu !<br>\nHP : $this->_HP<br>\nSTA : $this->_STA<br>\n";
+    function __construct() {   
+        parent::__construct(150,0,20,15,"Warrior");
     }
-
-    public function hit($force) {
-        $stamina = $this->_STA;
-        echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
-        $damage = $force / $stamina;
-        $this->_HP -= $damage;
-        echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
-        if($this->_HP < 0) {
-            $this->_alive = false;
-            echo $this->_name." est mort !\n<br>";
-        return $damage;
+    
+    // public function hit($force) {
+        //     $stamina = $this->_STA;
+        //     echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
+        //     $damage = $force / $stamina;
+        //     $this->_HP -= $damage;
+        //     echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
+        //     if($this->_HP < 0) {
+            //         $this->_alive = false;
+            //         echo $this->_name." est mort !\n<br>";
+            //     return $damage;
+            //     }
+            // }
+            
         }
-    }
-
-}
-
+        
 class Thief extends Character {
     function __construct() {        
-        $this->_HP = 75; // Points de vie
-        $this->_MP = 50; // Points de magie
-        $this->_STR = 7; // Force
-        $this->_STA = 10; // Endurance
-        $this->_name = "Thief"; // Nom
+        parent::__construct(75,50,7,10,"Thief");
         echo $this->_name." entre en jeu !<br>\nHP : $this->_HP<br>\nSTA : $this->_STA<br>\n";
     }
 
-    public function hit($force) {
-        $stamina = $this->_STA;
-        echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
-        $damage = $force / $stamina;
-        $this->_HP -= $damage;
-        echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
-        if($this->_HP < 0) {
-            $this->_alive = false;
-            echo $this->_name." est mort !\n<br>";
-        return $damage;
-        }
-    }
+    // public function hit($force) {
+    //     $stamina = $this->_STA;
+    //     echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
+    //     $damage = $force / $stamina;
+    //     $this->_HP -= $damage;
+    //     echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
+    //     if($this->_HP < 0) {
+    //         $this->_alive = false;
+    //         echo $this->_name." est mort !\n<br>";
+    //     return $damage;
+    //     }
+    // }
 
 }
 
@@ -111,18 +108,18 @@ class Warlock extends Character {
         echo $this->_name." entre en jeu !<br>\nHP : $this->_HP<br>\nSTA : $this->_STA<br>\n";
     }
 
-    public function hit($force) {
-        $stamina = $this->_STA;
-        echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
-        $damage = $force / $stamina;
-        $this->_HP -= $damage;
-        echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
-        if($this->_HP < 0) {
-            $this->_alive = false;
-            echo $this->_name." est mort !\n<br>";
-        return $damage;
-        }
-    }
+    // public function hit($force) {
+    //     $stamina = $this->_STA;
+    //     echo "Coup de force ".$force." au joueur qui a ".$stamina." STA.\n<br>";
+    //     $damage = $force / $stamina;
+    //     $this->_HP -= $damage;
+    //     echo $this->_name." reçoit ".$damage." dégats. Il lui reste ".$this->_HP." HP.\n<br>";
+    //     if($this->_HP < 0) {
+    //         $this->_alive = false;
+    //         echo $this->_name." est mort !\n<br>";
+    //     return $damage;
+    //     }
+    // }
 
 }
 
